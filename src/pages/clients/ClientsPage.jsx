@@ -187,7 +187,7 @@ const ClientsPage = () => {
             <h3 className="mt-4 text-lg font-medium text-surface-900 dark:text-surface-100">No clients found</h3>
             <p className="mt-2 text-surface-500 dark:text-surface-400">
               {searchTerm || statusFilter !== 'all' 
-                ? 'Try adjusting your search or filter to find what you're looking for.' 
+                ? 'Try adjusting your search or filter to find what you\'re looking for.' 
                 : 'Get started by adding your first client.'}
             </p>
           </div>
@@ -206,7 +206,7 @@ const ClientsPage = () => {
               </thead>
               <tbody className="divide-y divide-surface-200 dark:divide-surface-700">
                 {filteredClients.map(client => (
-                  <tr key={client.id} className="hover:bg-surface-50 dark:hover:bg-surface-750">
+                  <tr key={client.id} className="hover:bg-surface-50 dark:hover:bg-surface-700">
                     <td className="px-4 py-4 whitespace-nowrap">{client.name}</td>
                     <td className="px-4 py-4 whitespace-nowrap">{client.company || '-'}</td>
                     <td className="px-4 py-4 whitespace-nowrap">{client.email}</td>
