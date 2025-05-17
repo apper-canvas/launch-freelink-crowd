@@ -11,15 +11,15 @@ import { ToastContainer } from 'react-toastify';
 ReactDOM.createRoot(document.getElementById('root')).render(
   // Add React strict mode for development checking
   <React.StrictMode>
+    <BrowserRouter>
+      <Provider store={store}>
         <App />
         <ToastContainer
           position="bottom-right"
           autoClose={5000}
           hideProgressBar={false}
         />
-      <Provider store={store}>
-        <App />
-  </React.StrictMode>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>
 )
