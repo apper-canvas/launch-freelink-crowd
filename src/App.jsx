@@ -12,6 +12,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 const ClientsPage = lazy(() => import('./pages/clients/ClientsPage'));
 // Lazy-loaded client portal components
 const ClientDashboard = lazy(() => import('./pages/client/Dashboard'));
+const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));
 const ClientProjects = lazy(() => import('./pages/client/Projects'));
 const ClientDocuments = lazy(() => import('./pages/client/Documents'));
 const InvoicesPage = lazy(() => import('./pages/invoices/InvoicesPage'));
@@ -180,6 +181,7 @@ function App() {
             {/* Public routes */}
             <Route path="/" element={<Home />} />
             <Route path="/clients" element={<ClientsPage />} />
+            <Route path="/projects" element={<ProjectsPage />} />
             <Route path="/invoices" element={<InvoicesPage />} />
             <Route path="/login" element={<LoginPage />} />
             
