@@ -1,12 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { motion } from 'framer-motion';
+import { useSelector } from 'react-redux';
 import { getIcon } from './utils/iconUtils';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import LoginPage from './pages/LoginPage';
+import ProtectedRoute from './components/ProtectedRoute';
+
+// Lazy-loaded client portal components
+const ClientDashboard = lazy(() => import('./pages/client/Dashboard'));
+const ClientProjects = lazy(() => import('./pages/client/Projects'));
+const ClientDocuments = lazy(() => import('./pages/client/Documents'));
 
 function App() {
+  const { isAuthenticated, user } = useSelector(state => state.auth);
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem('darkMode') === 'true' || 
     window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -30,6 +39,7 @@ function App() {
   const MoonIcon = getIcon('Moon');
   const MenuIcon = getIcon('Menu');
   const XIcon = getIcon('X');
+  const UserCircleIcon = getIcon('UserCircle');
   
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -51,8 +61,7 @@ function App() {
               </span>
             </Link>
             
-            <div className="flex items-center space-x-4">
-              {/* Desktop Navigation */}
+            <div className="flex items-center space-x-4 md:space-x-6">
               <nav className="hidden md:flex items-center space-x-6">
                 <Link to="/" className={`text-surface-600 hover:text-primary dark:text-surface-300 dark:hover:text-white font-medium transition-colors ${location.pathname === '/' ? 'text-primary dark:text-white' : ''}`}>
                   Dashboard
@@ -67,6 +76,17 @@ function App() {
                   Invoices
                 </Link>
               </nav>
+
+              {isAuthenticated ? (
+                <Link to="/client/dashboard" className="hidden md:flex items-center space-x-1 text-surface-600 hover:text-primary dark:text-surface-300 dark:hover:text-white font-medium transition-colors">
+                  <UserCircleIcon className="w-5 h-5" />
+                  <span>{user?.name || 'Client Portal'}</span>
+                </Link>
+              ) : (
+                <Link to="/login" className="hidden md:flex items-center space-x-1 text-surface-600 hover:text-primary dark:text-surface-300 dark:hover:text-white font-medium transition-colors">
+                  <span>Client Login</span>
+                </Link>
+              )}
               
               <button 
                 onClick={toggleDarkMode}
@@ -132,6 +152,15 @@ function App() {
                 >
                   Invoices
                 </Link>
+                {isAuthenticated ? (
+                  <Link to="/client/dashboard" className="px-3 py-2 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors" onClick={() => setIsMenuOpen(false)}>
+                    Client Portal
+                  </Link>
+                ) : (
+                  <Link to="/login" className="px-3 py-2 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors" onClick={() => setIsMenuOpen(false)}>
+                    Client Login
+                  </Link>
+                )}
               </nav>
             </motion.div>
           )}
@@ -139,10 +168,29 @@ function App() {
       </header>
       
       <main className="flex-grow container mx-auto px-4 py-6">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={
+          <div className="w-full h-64 flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+          </div>
+        }>
+          <Routes>
+            {/* Public routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<LoginPage />} />
+            
+            {/* Protected client portal routes */}
+            <Route path="/client" element={<ProtectedRoute allowedRoles={['client']} />}>
+              <Route path="dashboard" element={<ClientDashboard />} />
+              <Route path="projects" element={<ClientProjects />} />
+              <Route path="documents" element={<ClientDocuments />} />
+              <Route path="invoices" element={<h1>Client Invoices</h1>} />
+              <Route path="messages" element={<h1>Messages</h1>} />
+            </Route>
+            
+            {/* Catch-all route */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
       </main>
       
       <footer className="bg-white dark:bg-surface-800 py-6 border-t border-surface-200 dark:border-surface-700">
