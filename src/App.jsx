@@ -182,11 +182,15 @@ function App() {
             
             {/* Protected client portal routes */}
             <Route path="/client" element={<ProtectedRoute allowedRoles={['client']} />}>
-              <Route index element={<Navigate to="/client/dashboard" replace />} />
-              <Route path="dashboard" element={<ClientDashboard />} />
+              <Route index element={<Navigate to="dashboard" replace />} />
+              <Route path="dashboard" element={
+                <Suspense fallback={<div className="flex justify-center items-center h-48"><div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div></div>}>
+                  <ClientDashboard />
+                </Suspense>
+              } />
               <Route path="projects" element={<ClientProjects />} />
               <Route path="documents" element={<ClientDocuments />} />
-              <Route path="invoices" element={<h1>Client Invoices</h1>} />
+              <Route path="invoices" element={<div className="card"><h1 className="text-2xl font-bold mb-4">Client Invoices</h1><p>Your invoices will appear here.</p></div>} />
               <Route path="messages" element={<h1>Messages</h1>} />
             </Route>
             
