@@ -6,6 +6,7 @@ import store from './store'
 import App from './App.jsx'
 import './index.css'
 
+// Initialize React application with Router and Redux store
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
@@ -14,3 +15,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </Provider>
     </BrowserRouter>
   </React.StrictMode>
+)
