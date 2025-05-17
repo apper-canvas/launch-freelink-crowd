@@ -325,14 +325,20 @@ const Home = () => {
               
               <div className="space-y-4">
                 {[
-                  { icon: CheckCircleIcon, color: 'green', text: 'Invoice #2305 was paid', time: '2 hours ago' },
-                  { icon: UsersIcon, color: 'blue', text: 'New client Acme Corp. added', time: '1 day ago' },
-                  { icon: FileTextIcon, color: 'amber', text: 'Invoice #2304 was sent', time: '2 days ago' },
-                  { icon: Clock3Icon, color: 'purple', text: 'Meeting scheduled with Sarah', time: '3 days ago' },
+                  { 
+                    icon: CheckCircleIcon, 
+                    bgClass: 'bg-green-100 dark:bg-green-900/30', 
+                    textClass: 'text-green-600 dark:text-green-400', 
+                    text: 'Invoice #2305 was paid', 
+                    time: '2 hours ago' 
+                  },
+                  { icon: UsersIcon, bgClass: 'bg-blue-100 dark:bg-blue-900/30', textClass: 'text-blue-600 dark:text-blue-400', text: 'New client Acme Corp. added', time: '1 day ago' },
+                  { icon: FileTextIcon, bgClass: 'bg-amber-100 dark:bg-amber-900/30', textClass: 'text-amber-600 dark:text-amber-400', text: 'Invoice #2304 was sent', time: '2 days ago' },
+                  { icon: Clock3Icon, bgClass: 'bg-purple-100 dark:bg-purple-900/30', textClass: 'text-purple-600 dark:text-purple-400', text: 'Meeting scheduled with Sarah', time: '3 days ago' },
                 ].map((activity, index) => (
                   <div key={index} className="flex items-start">
-                    <div className={`p-2 rounded-full bg-${activity.color}-100 dark:bg-${activity.color}-900/30 mr-3`}>
-                      <activity.icon className={`w-5 h-5 text-${activity.color}-600 dark:text-${activity.color}-400`} />
+                    <div className={`p-2 rounded-full ${activity.bgClass} mr-3`}>
+                      <activity.icon className={`w-5 h-5 ${activity.textClass}`} />
                     </div>
                     <div>
                       <p className="text-surface-800 dark:text-surface-200">{activity.text}</p>
