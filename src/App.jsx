@@ -14,6 +14,8 @@ const ClientsPage = lazy(() => import('./pages/clients/ClientsPage'));
 const ClientDashboard = lazy(() => import('./pages/client/Dashboard'));
 const ClientProjects = lazy(() => import('./pages/client/Projects'));
 const ClientDocuments = lazy(() => import('./pages/client/Documents'));
+const InvoicesPage = lazy(() => import('./pages/invoices/InvoicesPage'));
+const ClientInvoices = lazy(() => import('./pages/client/Invoices'));
 
 function App() {
   const { isAuthenticated, user } = useSelector(state => state.auth);
@@ -178,6 +180,7 @@ function App() {
             {/* Public routes */}
             <Route path="/" element={<Home />} />
             <Route path="/clients" element={<ClientsPage />} />
+            <Route path="/invoices" element={<InvoicesPage />} />
             <Route path="/login" element={<LoginPage />} />
             
             {/* Protected client portal routes */}
@@ -190,7 +193,7 @@ function App() {
               } />
               <Route path="projects" element={<ClientProjects />} />
               <Route path="documents" element={<ClientDocuments />} />
-              <Route path="invoices" element={<div className="card"><h1 className="text-2xl font-bold mb-4">Client Invoices</h1><p>Your invoices will appear here.</p></div>} />
+              <Route path="invoices" element={<ClientInvoices />} />
               <Route path="messages" element={<h1>Messages</h1>} />
             </Route>
             
