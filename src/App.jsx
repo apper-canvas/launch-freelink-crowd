@@ -9,6 +9,7 @@ import NotFound from './pages/NotFound';
 import LoginPage from './pages/LoginPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
+const ClientsPage = lazy(() => import('./pages/clients/ClientsPage'));
 // Lazy-loaded client portal components
 const ClientDashboard = lazy(() => import('./pages/client/Dashboard'));
 const ClientProjects = lazy(() => import('./pages/client/Projects'));
@@ -176,6 +177,7 @@ function App() {
           <Routes>
             {/* Public routes */}
             <Route path="/" element={<Home />} />
+            <Route path="/clients" element={<ClientsPage />} />
             <Route path="/login" element={<LoginPage />} />
             
             {/* Protected client portal routes */}
