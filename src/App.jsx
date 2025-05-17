@@ -1,6 +1,7 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import ClientsPage from './pages/clients/ClientsPage';
 import { motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import { getIcon } from './utils/iconUtils';
@@ -9,7 +10,6 @@ import NotFound from './pages/NotFound';
 import LoginPage from './pages/LoginPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
-const ClientsPage = lazy(() => import('./pages/clients/ClientsPage'));
 // Lazy-loaded client portal components
 const ClientDashboard = lazy(() => import('./pages/client/Dashboard'));
 const ProjectsPage = lazy(() => import('./pages/projects/ProjectsPage'));

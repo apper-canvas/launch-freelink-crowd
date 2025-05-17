@@ -188,7 +188,8 @@ const ClientsPage = () => {
             <p className="mt-2 text-surface-500 dark:text-surface-400">
               {searchTerm || statusFilter !== 'all' 
                 ? 'Try adjusting your search or filter to find what you\'re looking for.' 
-                : 'Get started by adding your first client.'}
+                : 'Get started by adding your first client.'
+              }
             </p>
           </div>
         ) : (
