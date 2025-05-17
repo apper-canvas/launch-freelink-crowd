@@ -182,6 +182,7 @@ function App() {
             
             {/* Protected client portal routes */}
             <Route path="/client" element={<ProtectedRoute allowedRoles={['client']} />}>
+              <Route index element={<Navigate to="/client/dashboard" replace />} />
               <Route path="dashboard" element={<ClientDashboard />} />
               <Route path="projects" element={<ClientProjects />} />
               <Route path="documents" element={<ClientDocuments />} />

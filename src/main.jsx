@@ -8,6 +8,7 @@ import './index.css'
 
 // Initialize React application with Router and Redux store
 ReactDOM.createRoot(document.getElementById('root')).render(
+  // Add React strict mode for development checking
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>

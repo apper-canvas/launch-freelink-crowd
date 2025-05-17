@@ -22,7 +22,11 @@ const ProtectedRoute = ({ allowedRoles = [] }) => {
 
   // Return outlet wrapped in appropriate layout based on user role
   if (user?.role === 'client') {
-    return <ClientLayout><Outlet /></ClientLayout>;
+    return (
+      <ClientLayout>
+        <Outlet />
+      </ClientLayout>
+    );
   }
 
   // Default case
