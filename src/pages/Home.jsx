@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { toast } from 'react-toastify';
+import { Link, useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import { getIcon } from '../utils/iconUtils';
 import MainFeature from '../components/MainFeature';
@@ -11,28 +11,28 @@ const initialClients = [
     id: '1',
     name: 'Sarah Johnson',
     company: 'Innovate Design Co.',
-    email: 'sarah@innovatedesign.com',
-    phone: '(555) 123-4567',
-    status: 'active',
+      time: '10 minutes ago', 
+      icon: 'MessageSquare', 
+      type: 'message'
     lastInteraction: '2023-09-15T10:30:00',
     tags: ['design', 'long-term']
   },
   {
     id: '2',
     name: 'Michael Rodriguez',
-    company: 'TechSolutions Inc.',
-    email: 'michael@techsolutions.com',
+      icon: 'DollarSign', 
+      type: 'payment'
     phone: '(555) 987-6543',
     status: 'active',
     lastInteraction: '2023-09-12T14:00:00',
     tags: ['development', 'high-priority']
   },
   {
-    id: '3',
-    name: 'Emily Chen',
+      icon: 'CheckSquare', 
+      type: 'milestone'
     company: 'GreenEarth Marketing',
     email: 'emily@greenearth.com',
-    phone: '(555) 234-5678',
+  
     status: 'inactive',
     lastInteraction: '2023-08-30T11:15:00',
     tags: ['marketing', 'project-based']
@@ -40,11 +40,23 @@ const initialClients = [
   {
     id: '4',
     name: 'David Wilson',
-    company: 'Wilson Consulting',
+  
     email: 'david@wilsonconsulting.com',
     phone: '(555) 876-5432',
     status: 'prospect',
     lastInteraction: '2023-09-05T16:45:00',
+  
+  // Map activity types to specific color classes 
+  const getActivityColorClasses = (type) => {
+    switch (type) {
+      case 'message':
+        return 'blue';
+      case 'payment':
+        return 'green';
+      default:
+        return 'purple';
+    }
+  };
     tags: ['consulting', 'new']
   }
 ];
@@ -109,9 +121,10 @@ const initialInvoices = [
   }
 ];
 
-const Home = () => {
+              {activity.map((item) => { 
   const [clients, setClients] = useState(() => {
-    const savedClients = localStorage.getItem('freelink-clients');
+                const colorClass = getActivityColorClasses(item.type);
+                const theme = darkMode ? 'dark' : 'light'; 
     return savedClients ? JSON.parse(savedClients) : initialClients;
   });
   
@@ -119,7 +132,7 @@ const Home = () => {
     const savedProjects = localStorage.getItem('freelink-projects');
     return savedProjects ? JSON.parse(savedProjects) : initialProjects;
   });
-  
+                        <div className={`absolute top-0 left-0 w-1 h-full bg-${colorClass}-${theme === 'light' ? '500' : '400'} rounded-l-lg`}></div>
   const [invoices, setInvoices] = useState(() => {
     const savedInvoices = localStorage.getItem('freelink-invoices');
     return savedInvoices ? JSON.parse(savedInvoices) : initialInvoices;
